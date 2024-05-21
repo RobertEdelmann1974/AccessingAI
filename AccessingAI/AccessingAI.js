@@ -82,8 +82,6 @@ function getModels(recordServer) {
 			recordModel.model_name = modelList[iModels].name;			
 			recordModel.model_info = JSON.stringify(modelList[iModels]);
 			databaseManager.saveData(recordModel);
-			
-			application.output(modelList[iModels].name);
 		}
 	}
 }
