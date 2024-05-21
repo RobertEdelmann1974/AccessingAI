@@ -1,0 +1,10 @@
+allowCreationRelatedRecords:true,
+foreignDataSource:"db:/settingsai/models",
+items:[
+{foreignColumnName:"server_uuid",primaryDataProviderID:"server_uuid",typeid:23,uuid:"786E62E2-3330-4BD7-972E-9E50928984C6"}
+],
+joinType:1,
+name:"servers_to_models",
+primaryDataSource:"db:/settingsai/servers",
+typeid:22,
+uuid:"18A44EB1-1283-426F-B3AD-F06CD95BE5CA"
