@@ -2,6 +2,9 @@
 german Version forther down
 ## Prerequisites
 
+First, we need a self-hosted server where the LLMs run.
+The fastest way to set up such a server is with OLLAMA and Open WebUI, then you have the LLMs and a web interface to test the basic function and ask no questions without Servoy
+
 ### Docker/Podman
 
 ### OLLAMA / Open WebUI
@@ -11,9 +14,9 @@ german Version forther down
 
 ## Voraussetzungen
 
-Als Erstes brauchen wir mal eine selbstgehosteten Server, auf dem die LLMs laufen.
+Als Erstes brauchen wir eine selbstgehosteten Server, auf dem die LLMs laufen.
 
-Am schnellsten hat man so einen Server mit von OLLAMA und Open WebUI augesetzt, dann hat man die  LLMs  und eine Weboberfläche, um die grundlegende Funktion zu testen und auch ohne Servoy Fragen zu stellen.
+Am schnellsten hat man so einen Server mit von OLLAMA und Open WebUI aufgesetzt, dann hat man die  LLMs  und eine Weboberfläche, um die grundlegende Funktion zu testen und auch ohne Servoy Fragen zu stellen.
 
 ### Docker/Podman
 
