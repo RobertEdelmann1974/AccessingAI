@@ -11,17 +11,37 @@ var modelsObject = null;
  */
 var httpClient = null;
 
+
 /**
+ * @type {String}
+ * @properties={typeid:35,uuid:"5FD26A29-91A0-4C3D-ABE9-1E74279B2A20"}
+ */
+var answer = null;
+
+/**
+ * @type {String}
+ * @properties={typeid:35,uuid:"3A79001E-113D-4431-8F61-D2467E955D84"}
+ */
+var context = null;
+
+/**
+ * @param {JSRecord<db:/settingsai/servers>} recordServer
+ * @param {JSRecord<db:/settingsai/models>} recordModel
+ * @param {String} question
+ * @param {String} context
  * @properties={typeid:24,uuid:"E1E5A0D1-721A-4BBB-9DCB-FB39E8C1D605"}
  */
-function testAI(recordServer) {
+function sendQuestion(recordServer, recordModel, question, context) {
 	if (!recordServer || !recordServer.url) {
 		return;
 	}
 
 	var url = recordServer.url;
 	var modelName = 'llama3'
-	var question = 'Who are the first developers of Servoy?'
+	if (!question) {
+		question = 'Who are the first developers of Servoy?'
+
+	}
 	httpClient = plugins.http.createNewHttpClient();
 	var requestObject = {
 		"model": modelName,
@@ -31,7 +51,7 @@ function testAI(recordServer) {
 	var postReq = httpClient.createPostRequest(url + '/api/generate');
 	postReq.addHeader('Content-Type', 'application/json');
 	postReq.setBodyContent(JSON.stringify(requestObject));
-	postReq.executeAsyncRequest(testAISuccess_callback,testAIError_callback, [requestObject])
+	postReq.executeAsyncRequest(testAISuccess_callback, testAIError_callback, [requestObject])
 }
 
 /**
@@ -46,6 +66,7 @@ function testAISuccess_callback(responseAI, requestObject) {
 	if(responseAI.getStatusCode() == 200) {
 		var response = JSON.parse(responseAI.getResponseBody());
 		application.output('Anwort ist: ' + response['response'])
+		answer = response['response'];
 	}
 	httpClient.close()
 }
