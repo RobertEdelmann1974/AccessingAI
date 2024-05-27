@@ -7,10 +7,62 @@ The fastest way to set up such a server is with OLLAMA and Open WebUI, then you 
 
 ### Docker/Podman
 
+The easiest way to do both is by using a container stack that contains both, since all the necessary prerequisites are then already installed.
+
+
+For example, if you need a container environment under Windows, you can set this up with the installers from Docker (https://docs.docker.com/desktop/install/windows-install/) or Podman (https://podman.io/docs/installation), which will also set up the required Linux part in the process.
+
+
+Alternatively, you can also use a virtual machine if you want to load the installation onto the WSL.
+
+
+Under macOS, there are installers available for Docker (https://docs.docker.com/desktop/install/mac-install/) and Podman (https://podman.io/docs/installation) as well.
+
 ### OLLAMA / Open WebUI
 
+To set up both containers, simply use the following definition:
 
-## Deutsche Fassung
+```YAML
+version: "3.8"
+services:
+  webui:
+    image: ghcr.io/open-webui/open-webui:main
+    expose:
+      - 8080/tcp
+    ports:
+      - 18080:8080/tcp
+    environment:
+      - USE_OLLAMA_DOCKER=true
+      - WEBUI_AUTH=false
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./openwebui:/app/backend/data
+    depends_on:
+      - ollama
+    restart: unless-stopped
+  ollama:
+    image: ollama/ollama
+    expose:
+      - 11434/tcp
+    ports:
+      - 11434:11434/tcp
+    healthcheck:
+      test: ollama --version || exit 1
+    command: serve
+    volumes:
+      - ./ollama:/root/.ollama
+    restart: unless-stopped
+```
+
+And to start both servers, simply create a folder, create a file called docker-compose.yml within it, and add the code there.
+
+
+Then you can start the servers in that folder using the command docker compose up -d or podman compose up -d
+
+
+This stack provides a web interface at http://localhost:18080 and an API at http://localhost:11434.
+
+# Deutsche Fassung
 
 ## Voraussetzungen
 
@@ -44,7 +96,7 @@ services:
     environment:
       - USE_OLLAMA_DOCKER=true
       - WEBUI_AUTH=false
-      - OLLAMA_BASE_URL=http://localhost:11434
+      - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
       - ./openwebui:/app/backend/data
     depends_on:
@@ -64,7 +116,7 @@ services:
     restart: unless-stopped
 ```
 
-Um die beiden Server zu starten legen Sie einfach einen Ordner an, erstellen Sie dort eine Datei docker-compose.yaml und fügen Sie den Code dort ein.
+Um die beiden Server zu starten legen Sie einfach einen Ordner an, erstellen Sie dort eine Datei docker-compose.yml und fügen Sie den Code dort ein.
 
 Dann können Sie in dem Ordner mit dem Befehl `docker compose up -d` bzw. `podman compose up -d`die Server starten
 
